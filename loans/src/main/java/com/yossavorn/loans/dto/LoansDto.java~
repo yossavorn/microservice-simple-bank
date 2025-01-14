@@ -1,0 +1,9 @@
+package com.yossavorn.loans.dto;
+
+import lombok.Data;
+
+@Data
+public class LoansDto {
+    
+
+}

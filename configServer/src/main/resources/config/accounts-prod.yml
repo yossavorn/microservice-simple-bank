@@ -1,0 +1,6 @@
+
+accounts:
+  message: "Accounts Prod Service"
+  contactDetails:
+    name: "Yossa Prod"
+    email: "0X2tG@example.com"

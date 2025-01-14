@@ -1,0 +1,11 @@
+package com.yossavorn.accounts.mapper;
+
+import com.yossavorn.accounts.dto.AccountDto;
+import com.yossavorn.accounts.entity.Account;
+
+public class AccountMapper {
+
+    public static AccountDto mapToAccountDto(Account account, AccountDto accountDto) {
+        accountDto.setAccountNumber(account.getAccountNumber());
+    }
+}

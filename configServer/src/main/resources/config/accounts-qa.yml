@@ -1,0 +1,6 @@
+
+accounts:
+  message: "Accounts QA Service"
+  contactDetails:
+    name: "Yossa QA"
+    email: "0X2tG@example.com"
