@@ -1,18 +1,18 @@
 package com.yossavorn.accounts.mapper;
 
+import com.yossavorn.accounts.dto.CustomerDataDto;
 import com.yossavorn.accounts.dto.CustomerDto;
 import com.yossavorn.accounts.entity.Customer;
 
 public class CustomerMapper {
-    /**
-     * Maps a {@link Customer} to a {@link CustomerDto}.
-     * <p>
-     * This method copies the name, email, and mobile number from the given
-     * {@link Customer} to the given {@link CustomerDto}.
-     * @param customer the {@link Customer} to map
-     * @param customerDto the {@link CustomerDto} to update
-     * @return the updated {@link CustomerDto}
-     */
+
+    public static CustomerDataDto mapToCustomerDataDto(Customer customer, CustomerDataDto customerDataDto){
+        customerDataDto.setName(customer.getName());
+        customerDataDto.setEmail(customer.getEmail());
+        customerDataDto.setMobileNumber(customer.getMobileNumber());
+        return customerDataDto;
+    }
+
     public static CustomerDto mapToCustomerDto(Customer customer, CustomerDto customerDto){
         customerDto.setName(customer.getName());
         customerDto.setEmail(customer.getEmail());
