@@ -1,0 +1,33 @@
+
+spring:
+  application:
+    name: "gateway"
+  config:
+    import: "optional:configserver:http://localhost:8071"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+
+logging:
+  level:
+    com.yossavorn.accounts: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
+
+info:
+  app:
+    name: "gateway"
+    description: "Gateway Server"
+    version: "1.0.0"
+
+
+
