@@ -45,7 +45,7 @@ services:
 #      service: network-deploy-service
 
   configserver:
-    image: "aloha0297/configserver:v3"
+    image: "aloha0297/configserver:v4"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -60,7 +60,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "aloha0297/eurekaserver:v3"
+    image: "aloha0297/eurekaserver:v4"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -78,10 +78,16 @@ services:
       service: microservice-configserver-config
 
   accounts:
-    image: "aloha0297/accounts:v3"
+    image: "aloha0297/accounts:v4"
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     depends_on:
       accountsdb:
         condition: service_healthy
@@ -89,20 +95,22 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
     environment:
       SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
     extends:
      file: common-config.yml
      service: microservice-eureka-config
   loans:
-    image: "aloha0297/loans:v3"
+    image: "aloha0297/loans:v4"
     container_name: loans-ms
     ports:
       - "9000:9000"
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     depends_on:
       loansdb:
         condition: service_healthy
@@ -117,10 +125,16 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "aloha0297/cards:v3"
+    image: "aloha0297/cards:v4"
     container_name: cards-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     depends_on:
       cardsdb:
         condition: service_healthy
@@ -130,6 +144,22 @@ services:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gateway:
+    image: "aloha0297/gateway:v4"
+    container_name: gateway-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-eureka-config
