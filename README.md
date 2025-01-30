@@ -1,6 +1,6 @@
 # Miroservice - Simple- Bank
 
-Tech Stach
+Tech Stacks
 - Java
 - Spring Boot
 - SPA
